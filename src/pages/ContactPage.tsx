@@ -13,7 +13,7 @@ const ContactPage = () => {
         <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
           <a
             href="tel:0740065085"
-            className="flex items-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+            className="flex items-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/5"
           >
             <Phone className="h-4 w-4" />
             074 0 065 085
@@ -29,7 +29,7 @@ const ContactPage = () => {
 
         <a
           href="mailto:contact@bodima.lk"
-          className="mx-auto mb-10 flex w-fit items-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+          className="mx-auto mb-10 flex w-fit items-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/5"
         >
           <Mail className="h-4 w-4" />
           contact@bodima.lk
@@ -42,7 +42,7 @@ const ContactPage = () => {
               <a
                 key={social}
                 href="#"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-sm font-bold text-primary transition-colors hover:bg-primary/10"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-sm font-bold text-primary transition-colors hover:bg-primary/5"
               >
                 {social[0]}
               </a>

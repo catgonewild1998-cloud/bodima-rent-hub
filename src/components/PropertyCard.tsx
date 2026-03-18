@@ -1,4 +1,4 @@
-import { MapPin, BedDouble, Bath, Star, Users } from "lucide-react";
+import { MapPin, BedDouble, Bath, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface PropertyCardProps {
@@ -28,7 +28,7 @@ export function PropertyCard({
   return (
     <Link
       to={`/property/${id}`}
-      className="group relative rounded-xl border border-border bg-card p-2 transition-all duration-300 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5"
+      className="group relative rounded-xl border border-border bg-card p-2 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/30"
     >
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
         <img
@@ -37,14 +37,13 @@ export function PropertyCard({
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        <div className="absolute inset-0 ring-1 ring-inset ring-foreground/10" />
         {featured && (
-          <span className="absolute right-2 top-2 rounded-md bg-primary/20 px-2 py-0.5 text-xs font-semibold text-primary">
+          <span className="absolute right-2 top-2 rounded-md bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
             Featured
           </span>
         )}
         {rating && (
-          <span className="absolute left-2 top-2 flex items-center gap-1 rounded-md bg-background/80 px-1.5 py-0.5 text-xs font-semibold text-foreground backdrop-blur-sm">
+          <span className="absolute left-2 top-2 flex items-center gap-1 rounded-md bg-background/90 px-1.5 py-0.5 text-xs font-semibold text-foreground shadow-sm">
             <Star className="h-3 w-3 fill-primary text-primary" />
             {rating}
           </span>
@@ -57,7 +56,7 @@ export function PropertyCard({
         <h3 className="mt-1 text-sm font-semibold text-foreground line-clamp-1">{title}</h3>
         <div className="mt-2 flex items-center justify-between">
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <MapPin className="h-3 w-3" />
+            <MapPin className="h-3 w-3 text-primary" />
             <span>{location}</span>
           </div>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
