@@ -14,7 +14,7 @@ export function Navbar() {
   const location = useLocation();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 border-b border-border bg-background shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
@@ -41,7 +41,7 @@ export function Navbar() {
         </div>
 
         <Link to="/post-ad">
-          <Button variant="hero" size="sm" className="gap-1.5">
+          <Button variant="cta" size="sm" className="gap-1.5">
             <Plus className="h-4 w-4" />
             Post a Free Ad
           </Button>

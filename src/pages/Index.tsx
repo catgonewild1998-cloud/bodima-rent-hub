@@ -33,7 +33,7 @@ const HomePage = () => {
           alt="Luxury apartment"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
 
         <div className="relative z-10 w-full max-w-3xl px-4 text-center">
           <h1 className="mb-3 text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
@@ -44,17 +44,17 @@ const HomePage = () => {
           </p>
 
           {/* Floating Search Bar */}
-          <div className="flex flex-col gap-0 rounded-xl border border-border bg-card/80 p-1.5 backdrop-blur-md md:flex-row md:items-center">
+          <div className="flex flex-col gap-0 rounded-xl border border-border bg-background p-1.5 shadow-lg md:flex-row md:items-center">
             <div className="flex flex-1 items-center gap-2 px-3 py-2">
-              <MapPin className="h-4 w-4 text-muted-foreground" />
+              <MapPin className="h-4 w-4 text-primary" />
               <select
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
               >
-                <option value="" className="bg-card text-foreground">Location</option>
+                <option value="">Location</option>
                 {cities.map((c) => (
-                  <option key={c} value={c} className="bg-card text-foreground">{c}</option>
+                  <option key={c} value={c}>{c}</option>
                 ))}
               </select>
             </div>
@@ -67,9 +67,9 @@ const HomePage = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full bg-transparent text-sm text-foreground outline-none"
               >
-                <option value="" className="bg-card text-foreground">Category</option>
+                <option value="">Category</option>
                 {categories.map((c) => (
-                  <option key={c} value={c} className="bg-card text-foreground">{c}</option>
+                  <option key={c} value={c}>{c}</option>
                 ))}
               </select>
             </div>
@@ -82,14 +82,14 @@ const HomePage = () => {
                 onChange={(e) => setType(e.target.value)}
                 className="w-full bg-transparent text-sm text-foreground outline-none"
               >
-                <option value="" className="bg-card text-foreground">Property Type</option>
+                <option value="">Property Type</option>
                 {propertyTypes.map((t) => (
-                  <option key={t} value={t} className="bg-card text-foreground">{t}</option>
+                  <option key={t} value={t}>{t}</option>
                 ))}
               </select>
             </div>
 
-            <Button variant="hero" onClick={handleSearch} className="m-1 gap-2">
+            <Button variant="cta" onClick={handleSearch} className="m-1 gap-2">
               <Search className="h-4 w-4" />
               Search
             </Button>
@@ -107,8 +107,8 @@ const HomePage = () => {
               onClick={() => navigate(`/search?location=${city}`)}
               className="group flex flex-col items-center gap-2"
             >
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary transition-all group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/10">
-                <MapPin className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-muted transition-all group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/10">
+                <MapPin className="h-6 w-6 text-primary" />
               </div>
               <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground">
                 {city}

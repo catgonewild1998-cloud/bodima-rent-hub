@@ -3,15 +3,15 @@ import { Phone, Mail, Home } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="border-t border-border bg-muted">
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
             <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-foreground">Contact Details</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2"><Phone className="h-3.5 w-3.5" /> 074 0 065 085</div>
-              <div className="flex items-center gap-2"><Phone className="h-3.5 w-3.5" /> 0705 065 085</div>
-              <div className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> contact@bodima.lk</div>
+              <div className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-primary" /> 074 0 065 085</div>
+              <div className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-primary" /> 0705 065 085</div>
+              <div className="flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-primary" /> contact@bodima.lk</div>
             </div>
           </div>
           <div>

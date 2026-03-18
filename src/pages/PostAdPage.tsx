@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/Layout";
 import { propertyTypes } from "@/data/properties";
@@ -16,24 +15,10 @@ const amenityCategories = {
 const PostAdPage = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    propertyType: "",
-    listedFor: "",
-    price: "",
-    paymentDuration: "Monthly",
-    rentedBy: "",
-    contactNumber: "",
-    email: "",
-    propertyStatus: "",
-    furnishingStatus: "",
-    address: "",
-    city: "",
-    bedrooms: 0,
-    beds: 0,
-    kitchen: 0,
-    bathrooms: 0,
-    selectedAmenities: [] as string[],
+    title: "", description: "", propertyType: "", listedFor: "", price: "",
+    paymentDuration: "Monthly", rentedBy: "", contactNumber: "", email: "",
+    propertyStatus: "", furnishingStatus: "", address: "", city: "",
+    bedrooms: 0, beds: 0, kitchen: 0, bathrooms: 0, selectedAmenities: [] as string[],
   });
 
   const updateField = (field: string, value: any) => {
@@ -60,21 +45,20 @@ const PostAdPage = () => {
     </div>
   );
 
-  const progressWidth = step === 1 ? "50%" : "100%";
+  const inputClass = "h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20";
 
   return (
     <Layout>
       <div className="container max-w-3xl py-8">
-        <h1 className="mb-6 text-2xl font-bold text-primary">Post Your Ad</h1>
+        <h1 className="mb-6 text-2xl font-bold text-foreground">Post Your Ad</h1>
 
         {/* Progress */}
-        <div className="mb-8 h-1 w-full rounded-full bg-secondary">
-          <div className="h-full rounded-full bg-primary transition-all duration-500" style={{ width: progressWidth }} />
+        <div className="mb-8 h-1 w-full rounded-full bg-muted">
+          <div className="h-full rounded-full bg-primary transition-all duration-500" style={{ width: step === 1 ? "50%" : "100%" }} />
         </div>
 
         {step === 1 && (
           <div className="space-y-8 animate-fade-in">
-            {/* Property Description */}
             <section>
               <div className="mb-4 rounded-lg bg-primary px-4 py-2">
                 <h2 className="font-bold text-primary-foreground">Property Description</h2>
@@ -83,7 +67,7 @@ const PostAdPage = () => {
               <div className="space-y-4">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-foreground">Title</label>
-                  <input value={formData.title} onChange={(e) => updateField("title", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
+                  <input value={formData.title} onChange={(e) => updateField("title", e.target.value)} className={inputClass} />
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-foreground">Description</label>
@@ -92,14 +76,14 @@ const PostAdPage = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="mb-1 block text-sm font-medium text-foreground">Property Type</label>
-                    <select value={formData.propertyType} onChange={(e) => updateField("propertyType", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20">
+                    <select value={formData.propertyType} onChange={(e) => updateField("propertyType", e.target.value)} className={inputClass}>
                       <option value="">Select type</option>
                       {propertyTypes.map((t) => <option key={t} value={t}>{t}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="mb-1 block text-sm font-medium text-foreground">Listed For</label>
-                    <select value={formData.listedFor} onChange={(e) => updateField("listedFor", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20">
+                    <select value={formData.listedFor} onChange={(e) => updateField("listedFor", e.target.value)} className={inputClass}>
                       <option value="">Select</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -111,7 +95,6 @@ const PostAdPage = () => {
               </div>
             </section>
 
-            {/* Price */}
             <section>
               <div className="mb-4 rounded-lg bg-primary px-4 py-2">
                 <h2 className="font-bold text-primary-foreground">Property Price</h2>
@@ -119,7 +102,7 @@ const PostAdPage = () => {
               <div className="space-y-4">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-foreground">Price in Rs</label>
-                  <input value={formData.price} onChange={(e) => updateField("price", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
+                  <input value={formData.price} onChange={(e) => updateField("price", e.target.value)} className={inputClass} />
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-foreground">Payment Duration</label>
@@ -134,45 +117,27 @@ const PostAdPage = () => {
               </div>
             </section>
 
-            {/* Owner */}
             <section>
               <div className="mb-4 rounded-lg bg-primary px-4 py-2">
                 <h2 className="font-bold text-primary-foreground">Property Owner Details</h2>
               </div>
               <div className="space-y-4">
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-foreground">Rented by</label>
-                  <input value={formData.rentedBy} onChange={(e) => updateField("rentedBy", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-foreground">Contact Number</label>
-                  <input value={formData.contactNumber} onChange={(e) => updateField("contactNumber", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-foreground">Email</label>
-                  <input value={formData.email} onChange={(e) => updateField("email", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                </div>
+                <div><label className="mb-1 block text-sm font-medium text-foreground">Rented by</label><input value={formData.rentedBy} onChange={(e) => updateField("rentedBy", e.target.value)} className={inputClass} /></div>
+                <div><label className="mb-1 block text-sm font-medium text-foreground">Contact Number</label><input value={formData.contactNumber} onChange={(e) => updateField("contactNumber", e.target.value)} className={inputClass} /></div>
+                <div><label className="mb-1 block text-sm font-medium text-foreground">Email</label><input value={formData.email} onChange={(e) => updateField("email", e.target.value)} className={inputClass} /></div>
               </div>
             </section>
 
-            {/* Location */}
             <section>
               <div className="mb-4 rounded-lg bg-primary px-4 py-2">
                 <h2 className="font-bold text-primary-foreground">Location</h2>
               </div>
               <div className="space-y-4">
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-foreground">Address</label>
-                  <textarea value={formData.address} onChange={(e) => updateField("address", e.target.value)} rows={2} className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-foreground">City</label>
-                  <input value={formData.city} onChange={(e) => updateField("city", e.target.value)} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                </div>
+                <div><label className="mb-1 block text-sm font-medium text-foreground">Address</label><textarea value={formData.address} onChange={(e) => updateField("address", e.target.value)} rows={2} className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" /></div>
+                <div><label className="mb-1 block text-sm font-medium text-foreground">City</label><input value={formData.city} onChange={(e) => updateField("city", e.target.value)} className={inputClass} /></div>
               </div>
             </section>
 
-            {/* Facilities */}
             <section>
               <div className="mb-4 rounded-lg bg-primary px-4 py-2">
                 <h2 className="font-bold text-primary-foreground">Facilities</h2>
@@ -185,44 +150,35 @@ const PostAdPage = () => {
               </div>
             </section>
 
-            <Button variant="hero" onClick={() => setStep(2)} className="w-full">
-              Save and Proceed
-            </Button>
+            <Button variant="cta" onClick={() => setStep(2)} className="w-full">Save and Proceed</Button>
           </div>
         )}
 
         {step === 2 && (
           <div className="space-y-8 animate-fade-in">
-            {/* Images */}
             <section>
               <div className="mb-4 rounded-lg bg-primary px-4 py-2">
                 <h2 className="font-bold text-primary-foreground">Add Images</h2>
               </div>
               <p className="mb-3 text-xs text-muted-foreground">You can select multiple images to upload at one time (Image size should be lower than 5mb, Can Upload up to 10 images)</p>
-              <div className="flex h-40 items-center justify-center rounded-xl border-2 border-dashed border-border bg-secondary/30">
+              <div className="flex h-40 items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted/50">
                 <p className="text-sm text-muted-foreground">Click or drag to upload images</p>
               </div>
             </section>
 
-            {/* Amenities */}
             <section>
               <div className="mb-4 rounded-lg bg-primary px-4 py-2">
                 <h2 className="font-bold text-primary-foreground">Features / Amenities</h2>
               </div>
               <p className="mb-4 text-xs text-muted-foreground">Select what features apply for your property.</p>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {Object.entries(amenityCategories).map(([category, items]) => (
-                  <div key={category}>
-                    <h3 className="mb-2 text-sm font-bold text-foreground">{category}</h3>
+                {Object.entries(amenityCategories).map(([cat, items]) => (
+                  <div key={cat}>
+                    <h3 className="mb-2 text-sm font-bold text-foreground">{cat}</h3>
                     <div className="space-y-1.5">
                       {items.map((item) => (
                         <label key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <input
-                            type="checkbox"
-                            checked={formData.selectedAmenities.includes(item)}
-                            onChange={() => toggleAmenity(item)}
-                            className="h-4 w-4 rounded border-border accent-primary"
-                          />
+                          <input type="checkbox" checked={formData.selectedAmenities.includes(item)} onChange={() => toggleAmenity(item)} className="h-4 w-4 rounded border-border accent-primary" />
                           {item}
                         </label>
                       ))}
@@ -234,7 +190,7 @@ const PostAdPage = () => {
 
             <div className="flex gap-4">
               <Button variant="outline" onClick={() => setStep(1)} className="flex-1">Back</Button>
-              <Button variant="hero" className="flex-1">Save and Proceed</Button>
+              <Button variant="cta" className="flex-1">Save and Proceed</Button>
             </div>
           </div>
         )}
