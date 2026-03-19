@@ -14,7 +14,140 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      properties: {
+        Row: {
+          address: string | null
+          amenities: string[] | null
+          availability: string | null
+          baths: number | null
+          beds: number | null
+          category: string
+          city: string | null
+          created_at: string
+          description: string | null
+          featured: boolean | null
+          floor_area: string | null
+          floors: number | null
+          furnishing: string | null
+          id: string
+          images: string[] | null
+          is_approved: boolean | null
+          location: string
+          owner_email: string | null
+          owner_name: string
+          owner_phone: string
+          payment_duration: string | null
+          price: number
+          rating: number | null
+          rooms: number | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          address?: string | null
+          amenities?: string[] | null
+          availability?: string | null
+          baths?: number | null
+          beds?: number | null
+          category: string
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          floor_area?: string | null
+          floors?: number | null
+          furnishing?: string | null
+          id?: string
+          images?: string[] | null
+          is_approved?: boolean | null
+          location: string
+          owner_email?: string | null
+          owner_name: string
+          owner_phone: string
+          payment_duration?: string | null
+          price: number
+          rating?: number | null
+          rooms?: number | null
+          title: string
+          type: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          address?: string | null
+          amenities?: string[] | null
+          availability?: string | null
+          baths?: number | null
+          beds?: number | null
+          category?: string
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          floor_area?: string | null
+          floors?: number | null
+          furnishing?: string | null
+          id?: string
+          images?: string[] | null
+          is_approved?: boolean | null
+          location?: string
+          owner_email?: string | null
+          owner_name?: string
+          owner_phone?: string
+          payment_duration?: string | null
+          price?: number
+          rating?: number | null
+          rooms?: number | null
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      tenant_requests: {
+        Row: {
+          created_at: string
+          email: string | null
+          employment_status: string | null
+          id: string
+          name: string
+          phone: string
+          phone_verified: boolean | null
+          property_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          employment_status?: string | null
+          id?: string
+          name: string
+          phone: string
+          phone_verified?: boolean | null
+          property_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          employment_status?: string | null
+          id?: string
+          name?: string
+          phone?: string
+          phone_verified?: boolean | null
+          property_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tenant_requests_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
