@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Star, BedDouble, Bath, Car, Building2, Ruler, Layers, Phone, Mail, X } from "lucide-react";
+import { MapPin, Star, BedDouble, Bath, Car, Building2, Ruler, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/Layout";
 import { PropertyCard } from "@/components/PropertyCard";
+import { RequestModal } from "@/components/RequestModal";
+import { ContactModal } from "@/components/ContactModal";
 import { properties } from "@/data/properties";
 
 const PropertyDetailPage = () => {
@@ -11,9 +13,7 @@ const PropertyDetailPage = () => {
   const property = properties.find((p) => p.id === id);
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
-  const [requestSent, setRequestSent] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [formData, setFormData] = useState({ name: "", phone: "", email: "", status: "" });
 
   if (!property) {
     return (
@@ -26,11 +26,6 @@ const PropertyDetailPage = () => {
   }
 
   const similar = properties.filter((p) => p.id !== property.id).slice(0, 4);
-
-  const handleRequest = (e: React.FormEvent) => {
-    e.preventDefault();
-    setRequestSent(true);
-  };
 
   return (
     <Layout>
@@ -76,7 +71,7 @@ const PropertyDetailPage = () => {
             </p>
           </div>
           <Button variant="cta" onClick={() => setShowRequestModal(true)} className="gap-2">
-            Request
+            Request to Rent
           </Button>
         </div>
 
@@ -89,22 +84,17 @@ const PropertyDetailPage = () => {
         {/* Details Grid */}
         <div className="mb-8 rounded-xl border border-border bg-primary/5 p-6">
           <div className="mb-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-            <div className="text-center">
-              <p className="text-xs text-muted-foreground">Property Type</p>
-              <p className="font-semibold text-primary">{property.propertyType}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-xs text-muted-foreground">Payment Duration</p>
-              <p className="font-semibold text-primary">Monthly</p>
-            </div>
-            <div className="text-center">
-              <p className="text-xs text-muted-foreground">Furnishing Status</p>
-              <p className="font-semibold text-primary">{property.furnishing}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-xs text-muted-foreground">Availability</p>
-              <p className="font-semibold text-primary">{property.availability}</p>
-            </div>
+            {[
+              { label: "Property Type", value: property.propertyType },
+              { label: "Payment Duration", value: "Monthly" },
+              { label: "Furnishing Status", value: property.furnishing },
+              { label: "Availability", value: property.availability },
+            ].map(({ label, value }) => (
+              <div key={label} className="text-center">
+                <p className="text-xs text-muted-foreground">{label}</p>
+                <p className="font-semibold text-primary">{value}</p>
+              </div>
+            ))}
           </div>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {[
@@ -137,92 +127,8 @@ const PropertyDetailPage = () => {
         </section>
       </div>
 
-      {/* Request Modal */}
-      {showRequestModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 backdrop-blur-sm" onClick={() => { setShowRequestModal(false); setRequestSent(false); }}>
-          <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => { setShowRequestModal(false); setRequestSent(false); }} className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <X className="h-4 w-4" />
-            </button>
-
-            {!requestSent ? (
-              <>
-                <div className="mb-1 flex items-center gap-2 text-sm font-bold text-primary">
-                  <div className="flex h-5 w-5 items-center justify-center rounded bg-primary text-xs text-primary-foreground">B</div>
-                  Bodima.lk
-                </div>
-                <h2 className="mb-1 text-2xl font-bold text-foreground">Request Property</h2>
-                <p className="mb-6 text-sm text-muted-foreground">Please enter your name and mobile number to proceed.</p>
-
-                <form onSubmit={handleRequest} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="mb-1 block text-xs font-medium text-foreground">Name</label>
-                      <input required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Name" className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                    </div>
-                    <div>
-                      <label className="mb-1 block text-xs font-medium text-foreground">Mobile Number</label>
-                      <input required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="(071 2 891 275)" className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="mb-1 block text-xs font-medium text-foreground">Email (Optional)</label>
-                      <input value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Email@email.com" className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20" />
-                    </div>
-                    <div>
-                      <label className="mb-1 block text-xs font-medium text-foreground">Employment Status</label>
-                      <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} className="h-9 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20">
-                        <option value="">Select Status</option>
-                        <option value="student">Student</option>
-                        <option value="employed">Employed</option>
-                        <option value="self-employed">Self-employed</option>
-                      </select>
-                    </div>
-                  </div>
-                  <Button variant="cta" type="submit" className="w-full">Request</Button>
-                </form>
-              </>
-            ) : (
-              <div className="text-center">
-                <div className="mb-1 flex items-center justify-center gap-2 text-sm font-bold text-primary">
-                  <div className="flex h-5 w-5 items-center justify-center rounded bg-primary text-xs text-primary-foreground">B</div>
-                  Bodima.lk
-                </div>
-                <h2 className="mb-2 text-2xl font-bold text-foreground">Contact Information</h2>
-                <p className="mb-1 text-lg font-bold text-primary">{property.owner}</p>
-                <p className="mb-4 text-sm text-muted-foreground">owns 14 properties</p>
-                <div className="flex items-center justify-center gap-3">
-                  <a href={`tel:${property.ownerPhone.replace(/\s/g, "")}`} className="flex items-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5">
-                    <Phone className="h-4 w-4" />
-                    {property.ownerPhone}
-                  </a>
-                  <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground hover:text-foreground">
-                    <Mail className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Contact Info Modal */}
-      {showContactModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 backdrop-blur-sm" onClick={() => setShowContactModal(false)}>
-          <div className="relative w-full max-w-sm rounded-xl border border-border bg-card p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setShowContactModal(false)} className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <X className="h-4 w-4" />
-            </button>
-            <p className="mb-1 text-lg font-bold text-primary">{property.owner}</p>
-            <p className="mb-3 text-sm text-muted-foreground">owns 14 properties</p>
-            <a href={`tel:${property.ownerPhone.replace(/\s/g, "")}`} className="flex items-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5">
-              <Phone className="h-4 w-4" />
-              {property.ownerPhone}
-            </a>
-          </div>
-        </div>
-      )}
+      <RequestModal property={property} open={showRequestModal} onClose={() => setShowRequestModal(false)} />
+      <ContactModal property={property} open={showContactModal} onClose={() => setShowContactModal(false)} />
     </Layout>
   );
 };
