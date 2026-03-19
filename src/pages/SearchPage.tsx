@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/Layout";
 import { PropertyCard } from "@/components/PropertyCard";
-import { properties, cities, categories, propertyTypes } from "@/data/properties";
+import { fetchProperties, cities, categories, propertyTypes, type Property } from "@/data/properties";
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -13,17 +13,20 @@ const SearchPage = () => {
   const [type, setType] = useState(searchParams.get("type") || "");
   const [bedrooms, setBedrooms] = useState(0);
   const [bathrooms, setBathrooms] = useState(0);
+  const [results, setResults] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = useMemo(() => {
-    return properties.filter((p) => {
-      if (location && !p.location.toLowerCase().includes(location.toLowerCase())) return false;
-      if (category && p.category !== category) return false;
-      if (type && p.type !== type) return false;
-      if (bedrooms > 0 && p.rooms < bedrooms) return false;
-      if (bathrooms > 0 && p.baths < bathrooms) return false;
-      return true;
-    });
-  }, [location, category, type, bedrooms, bathrooms]);
+  const doSearch = () => {
+    setLoading(true);
+    fetchProperties({ location, category, type, bedrooms, bathrooms })
+      .then(setResults)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    doSearch();
+  }, []); // initial load with URL params
 
   return (
     <Layout>
@@ -94,7 +97,7 @@ const SearchPage = () => {
               </div>
             </div>
 
-            <Button variant="cta" className="w-full gap-2">
+            <Button variant="cta" className="w-full gap-2" onClick={doSearch}>
               <Search className="h-4 w-4" /> Search
             </Button>
           </aside>
@@ -103,7 +106,7 @@ const SearchPage = () => {
           <div className="flex-1">
             <div className="mb-6 flex items-center justify-between">
               <h1 className="text-xl font-bold text-foreground">
-                Search result: <span className="text-primary">{filtered.length} properties found</span>
+                Search result: <span className="text-primary">{loading ? "..." : `${results.length} properties found`}</span>
               </h1>
               <Button variant="outline" size="sm" className="gap-2 lg:hidden">
                 <SlidersHorizontal className="h-4 w-4" /> Filters
@@ -111,12 +114,12 @@ const SearchPage = () => {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {filtered.map((p) => (
-                <PropertyCard key={p.id} {...p} />
+              {results.map((p) => (
+                <PropertyCard key={p.id} property={p} />
               ))}
             </div>
 
-            {filtered.length === 0 && (
+            {!loading && results.length === 0 && (
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <Search className="mb-4 h-12 w-12 text-muted-foreground" />
                 <h3 className="text-lg font-semibold text-foreground">No properties found</h3>
