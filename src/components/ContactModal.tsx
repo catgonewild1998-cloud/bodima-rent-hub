@@ -1,4 +1,4 @@
-import { Phone, X } from "lucide-react";
+import { Phone, Mail, X } from "lucide-react";
 import type { Property } from "@/data/properties";
 
 interface ContactModalProps {
@@ -16,12 +16,18 @@ export function ContactModal({ property, open, onClose }: ContactModalProps) {
         <button onClick={onClose} className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
           <X className="h-4 w-4" />
         </button>
-        <p className="mb-1 text-lg font-bold text-primary">{property.owner}</p>
-        <p className="mb-3 text-sm text-muted-foreground">owns 14 properties</p>
-        <a href={`tel:${property.ownerPhone.replace(/\s/g, "")}`} className="flex items-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5">
-          <Phone className="h-4 w-4" />
-          {property.ownerPhone}
-        </a>
+        <h2 className="mb-4 text-xl font-bold text-foreground">Owner Contact</h2>
+        <p className="mb-1 text-lg font-bold text-primary">{property.owner_name}</p>
+        <div className="mt-4 flex flex-col gap-3">
+          <a href={`tel:${property.owner_phone.replace(/\s/g, "")}`} className="flex items-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5">
+            <Phone className="h-4 w-4" /> {property.owner_phone}
+          </a>
+          {property.owner_email && (
+            <a href={`mailto:${property.owner_email}`} className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground">
+              <Mail className="h-4 w-4" /> {property.owner_email}
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
