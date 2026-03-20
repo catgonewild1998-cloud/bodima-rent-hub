@@ -1,13 +1,13 @@
-import { Link, useLocation } from "react-router-dom";
-import { Home, Search, MapPin, Phone, User, Plus } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Home, Search, MapPin, Phone, User, Plus, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
   { label: "Home", to: "/", icon: Home },
   { label: "All Ads", to: "/search", icon: Search },
   { label: "Find Here", to: "/search", icon: MapPin },
   { label: "Contact Us", to: "/contact", icon: Phone },
-  { label: "Account", to: "/profile", icon: User },
 ];
 
 export function Navbar() {
