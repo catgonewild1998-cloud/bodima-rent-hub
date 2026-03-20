@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Upload, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/Layout";
 import { propertyTypes, insertProperty, uploadPropertyImage } from "@/data/properties";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const amenityCategories = {
   "Bills Including": ["Water", "Electricity"],
@@ -17,6 +18,7 @@ const amenityCategories = {
 
 const PostAdPage = () => {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -27,6 +29,13 @@ const PostAdPage = () => {
     propertyStatus: "", furnishingStatus: "", address: "", city: "",
     bedrooms: 0, beds: 0, kitchen: 0, bathrooms: 0, selectedAmenities: [] as string[],
   });
+
+  // Redirect unauthenticated users
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/auth");
+    }
+  }, [user, loading, navigate]);
 
   const updateField = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -86,6 +95,7 @@ const PostAdPage = () => {
         owner_name: formData.rentedBy,
         owner_phone: formData.contactNumber,
         owner_email: formData.email || undefined,
+        user_id: user?.id,
       });
 
       toast({ title: "Success!", description: "Your property ad has been submitted for review." });
