@@ -95,6 +95,7 @@ const PostAdPage = () => {
         owner_name: formData.rentedBy,
         owner_phone: formData.contactNumber,
         owner_email: formData.email || undefined,
+        user_id: user?.id,
       });
 
       toast({ title: "Success!", description: "Your property ad has been submitted for review." });

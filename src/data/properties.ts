@@ -73,6 +73,7 @@ export async function insertProperty(property: {
   owner_name: string;
   owner_phone: string;
   owner_email?: string;
+  user_id?: string;
 }) {
   const { data, error } = await supabase
     .from("properties")
