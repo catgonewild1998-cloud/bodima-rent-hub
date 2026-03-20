@@ -30,6 +30,13 @@ const PostAdPage = () => {
     bedrooms: 0, beds: 0, kitchen: 0, bathrooms: 0, selectedAmenities: [] as string[],
   });
 
+  // Redirect unauthenticated users
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/auth");
+    }
+  }, [user, loading, navigate]);
+
   const updateField = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
